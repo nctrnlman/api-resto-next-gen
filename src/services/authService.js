@@ -5,8 +5,13 @@ const secretKey = process.env.JWT_SECRET || "your_jwt_secret";
 
 const login = async (email, password) => {
   const user = await userRepository.findUserByEmail(email);
-  if (!user || !(await bcrypt.compare(password, user.password))) {
-    throw new Error("Invalid credentials");
+  if (!user) {
+    throw new Error("Email not found");
+  }
+
+  const isPasswordValid = await bcrypt.compare(password, user.password);
+  if (!isPasswordValid) {
+    throw new Error("Incorrect password");
   }
 
   const token = jwt.sign({ id: user.id, email: user.email }, secretKey, {
@@ -16,6 +21,7 @@ const login = async (email, password) => {
     id: user.id,
     email: user.email,
     name: user.name,
+    role: user.role,
   };
 
   return { token, user: userData };

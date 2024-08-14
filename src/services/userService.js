@@ -13,7 +13,7 @@ const registerUser = async (name, email, password, role) => {
     name,
     email,
     password: hashedPassword,
-    role, // Menambahkan role di sini
+    role,
   });
 };
 
