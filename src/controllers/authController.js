@@ -3,21 +3,21 @@ const userService = require("../services/userService");
 
 const register = async (req, res) => {
   try {
-    const { name, email, password } = req.body;
-    const user = await userService.registerUser(name, email, password);
+    const { name, email, password, role } = req.body;
+    const user = await userService.registerUser(name, email, password, role);
     res.sendResponse(
       "success",
       "User registered successfully",
-      { id: user.id, name: user.name, email: user.email },
+      user,
       null,
       201
     );
-  } catch (err) {
+  } catch (error) {
     res.sendResponse(
       "error",
       "Failed to register user",
       null,
-      [err.message],
+      [error.message],
       500
     );
   }
