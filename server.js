@@ -5,6 +5,7 @@ const userRoutes = require("./src/routes/userRoutes");
 const authRoutes = require("./src/routes/authRoutes");
 const productRoutes = require("./src/routes/productRoutes");
 const categoryRoutes = require("./src/routes/categoryRoutes");
+const orderRoutes = require("./src/routes/orderRoutes");
 const db = require("./src/models");
 const formatResponse = require("./src/utils/responseHandler");
 
@@ -20,6 +21,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/categories", categoryRoutes);
+app.use("/api/orders", orderRoutes);
 
 const PORT = process.env.PORT || 8000;
 
