@@ -5,6 +5,7 @@ const Product = db.Product;
 const getAllProducts = (categoryId = null, search = null) => {
   const queryOptions = {
     include: ["Category"],
+    order: [["product_name", "ASC"]],
   };
 
   if (categoryId) {
