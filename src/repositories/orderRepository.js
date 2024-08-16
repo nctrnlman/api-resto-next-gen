@@ -1,5 +1,5 @@
 const db = require("../models");
-const { Order, OrderDetail, Product } = db;
+const { Order, OrderDetail, Product, User } = db;
 
 const getOrdersByParams = async ({ user_id, no_table, status }) => {
   const whereConditions = {};
@@ -14,7 +14,14 @@ const getOrdersByParams = async ({ user_id, no_table, status }) => {
         model: OrderDetail,
         include: [Product],
       },
+      {
+        model: User,
+        as: "user",
+        attributes: ["id", "name", "email"],
+        required: false,
+      },
     ],
+    order: [["createdAt", "DESC"]],
   });
 };
 
