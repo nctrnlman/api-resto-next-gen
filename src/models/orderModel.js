@@ -11,6 +11,10 @@ module.exports = (sequelize, DataTypes) => {
       user_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
+        references: {
+          model: "Users",
+          key: "id",
+        },
       },
       total_price: {
         type: DataTypes.STRING,
@@ -33,6 +37,7 @@ module.exports = (sequelize, DataTypes) => {
     {}
   );
   Order.associate = function (models) {
+    Order.belongsTo(models.User, { foreignKey: "user_id", as: "user" });
     Order.hasMany(models.OrderDetail, { foreignKey: "order_id" });
   };
   return Order;
