@@ -32,16 +32,7 @@ const register = async (req, res) => {
 const login = async (req, res) => {
   try {
     const { emailOrWhatsapp, password } = req.body;
-    let data;
-
-    if (emailOrWhatsapp.includes("@")) {
-      // Login with email
-      data = await authService.loginWithEmail(emailOrWhatsapp, password);
-    } else {
-      // Login with WhatsApp number
-      data = await authService.loginWithWhatsapp(emailOrWhatsapp, password);
-    }
-
+    const data = await authService.login(emailOrWhatsapp, password);
     res.sendResponse("success", "Login successful", data, null, 200);
   } catch (err) {
     res.sendResponse("error", "Failed to log in", null, [err.message], 500);
