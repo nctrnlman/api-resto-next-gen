@@ -22,6 +22,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
+      no_whatsapp: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
       role: {
         type: DataTypes.INTEGER,
         allowNull: false,

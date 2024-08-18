@@ -3,8 +3,14 @@ const userService = require("../services/userService");
 
 const register = async (req, res) => {
   try {
-    const { name, email, password, role } = req.body;
-    const user = await userService.registerUser(name, email, password, role);
+    const { name, email, password, role, no_whatsapp } = req.body;
+    const user = await userService.registerUser(
+      name,
+      email,
+      password,
+      role,
+      no_whatsapp
+    );
     res.sendResponse(
       "success",
       "User registered successfully",
@@ -25,8 +31,17 @@ const register = async (req, res) => {
 
 const login = async (req, res) => {
   try {
-    const { email, password } = req.body;
-    const data = await authService.login(email, password);
+    const { emailOrWhatsapp, password } = req.body;
+    let data;
+
+    if (emailOrWhatsapp.includes("@")) {
+      // Login with email
+      data = await authService.loginWithEmail(emailOrWhatsapp, password);
+    } else {
+      // Login with WhatsApp number
+      data = await authService.loginWithWhatsapp(emailOrWhatsapp, password);
+    }
+
     res.sendResponse("success", "Login successful", data, null, 200);
   } catch (err) {
     res.sendResponse("error", "Failed to log in", null, [err.message], 500);

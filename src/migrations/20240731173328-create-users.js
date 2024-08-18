@@ -22,6 +22,10 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
+      no_whatsapp: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+      },
       role: {
         type: Sequelize.INTEGER,
         allowNull: false,

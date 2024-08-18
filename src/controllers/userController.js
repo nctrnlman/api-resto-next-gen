@@ -46,11 +46,42 @@ const getUser = async (req, res) => {
   }
 };
 
+const getUserByWhatsapp = async (req, res) => {
+  try {
+    const user = await userService.getUserByWhatsapp(req.params.no_whatsapp);
+    if (user) {
+      res.sendResponse(
+        "success",
+        "User retrieved successfully",
+        user,
+        null,
+        200
+      );
+    } else {
+      res.sendResponse("error", "User not found", null, null, 404);
+    }
+  } catch (err) {
+    res.sendResponse(
+      "error",
+      "Failed to retrieve user",
+      null,
+      [err.message],
+      500
+    );
+  }
+};
+
 const updateUser = async (req, res) => {
   try {
     const { id } = req.params;
-    const { name, email, password } = req.body;
-    const user = await userService.updateUser(id, name, email, password);
+    const { name, email, password, no_whatsapp } = req.body;
+    const user = await userService.updateUser(
+      id,
+      name,
+      email,
+      password,
+      no_whatsapp
+    );
     if (user) {
       res.sendResponse("success", "User updated successfully", user, null, 200);
     } else {
@@ -103,9 +134,11 @@ const getUserByToken = async (req, res) => {
     );
   }
 };
+
 module.exports = {
   getUsers,
   getUser,
+  getUserByWhatsapp,
   updateUser,
   deleteUser,
   getUserByToken,

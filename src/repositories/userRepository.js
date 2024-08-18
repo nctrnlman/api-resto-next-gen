@@ -9,6 +9,10 @@ const findUserByEmail = async (email) => {
   return await User.findOne({ where: { email } });
 };
 
+const findUserByWhatsapp = async (no_whatsapp) => {
+  return await User.findOne({ where: { no_whatsapp } });
+};
+
 const findUserById = async (id) => {
   return await User.findByPk(id);
 };
@@ -39,6 +43,7 @@ const deleteUser = async (id) => {
 module.exports = {
   createUser,
   findUserByEmail,
+  findUserByWhatsapp,
   findUserById,
   findAllUsers,
   updateUser,
