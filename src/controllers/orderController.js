@@ -1,14 +1,17 @@
 const orderService = require("../services/orderService");
 
+// Fungsi untuk mengambil semua pesanan
 const getAllOrders = async (req, res) => {
   try {
     const { user_id, no_table, status } = req.query;
 
+    // Jika ada parameter pencarian, ambil pesanan berdasarkan parameter tersebut; jika tidak, ambil semua pesanan
     const orders =
       user_id || no_table || status
         ? await orderService.getOrdersByParams({ user_id, no_table, status })
         : await orderService.getOrdersByParams({});
 
+    // Mengirimkan respon berhasil dengan daftar pesanan
     res.sendResponse(
       "success",
       "Orders retrieved successfully",
@@ -27,10 +30,13 @@ const getAllOrders = async (req, res) => {
   }
 };
 
+// Fungsi untuk mengambil pesanan berdasarkan ID
 const getOrderById = async (req, res) => {
   try {
+    // Mengambil pesanan berdasarkan ID dari parameter URL
     const order = await orderService.getOrder(req.params.id);
     if (order) {
+      // Jika pesanan ditemukan, mengirimkan respon berhasil
       res.sendResponse(
         "success",
         "Order retrieved successfully",
@@ -52,9 +58,13 @@ const getOrderById = async (req, res) => {
   }
 };
 
+// Fungsi untuk membuat pesanan baru
 const createOrder = async (req, res) => {
   try {
+    // Mengambil data pesanan dari body permintaan dan memanggil layanan untuk membuat pesanan
     const order = await orderService.addOrCreateOrder(req.body);
+
+    // Mengirimkan respon berhasil
     res.sendResponse(
       "success",
       "Order processed successfully",
@@ -73,13 +83,16 @@ const createOrder = async (req, res) => {
   }
 };
 
+// Fungsi untuk memperbarui pesanan berdasarkan ID
 const updateOrder = async (req, res) => {
   try {
+    // Mengambil ID pesanan dari parameter dan data baru dari body permintaan
     const updatedOrder = await orderService.updateOrder(
       req.params.id,
       req.body
     );
     if (updatedOrder) {
+      // Jika pesanan berhasil diperbarui, mengirimkan respon berhasil
       res.sendResponse(
         "success",
         "Order updated successfully",
@@ -101,8 +114,10 @@ const updateOrder = async (req, res) => {
   }
 };
 
+// Fungsi untuk menghapus pesanan berdasarkan ID
 const deleteOrder = async (req, res) => {
   try {
+    // Memanggil layanan untuk menghapus pesanan berdasarkan ID
     const success = await orderService.deleteOrder(req.params.id);
     if (success) {
       res.sendResponse(
