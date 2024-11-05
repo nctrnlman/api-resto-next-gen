@@ -6,8 +6,8 @@ module.exports = {
     const hashedPassword = await bcrypt.hash("password123", 10);
     await queryInterface.bulkInsert("Users", [
       {
-        name: "John Doe",
-        email: "john.doe@example.com",
+        name: "Dije",
+        email: "Dije@gmail.com",
         password: hashedPassword,
         no_whatsapp: "1234567890",
         role: 1,
