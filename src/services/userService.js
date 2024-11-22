@@ -11,11 +11,13 @@ const registerUser = async (name, email, password, role, no_whatsapp) => {
   }
 
   // Memeriksa apakah nomor WhatsApp sudah digunakan
-  const existingUserByWhatsapp = await userRepository.findUserByWhatsapp(
-    no_whatsapp
-  );
-  if (existingUserByWhatsapp) {
-    throw new Error("WhatsApp number already in use");
+  if (no_whatsapp) {
+    const existingUserByWhatsapp = await userRepository.findUserByWhatsapp(
+      no_whatsapp
+    );
+    if (existingUserByWhatsapp) {
+      throw new Error("WhatsApp number already in use");
+    }
   }
 
   // Menghash password sebelum menyimpannya
@@ -25,7 +27,7 @@ const registerUser = async (name, email, password, role, no_whatsapp) => {
     email,
     password: hashedPassword,
     role,
-    no_whatsapp,
+    no_whatsapp: no_whatsapp ?? 0,
   });
 };
 
